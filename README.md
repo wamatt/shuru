@@ -2,7 +2,7 @@
 
 Local-first microVM sandbox for AI agents on macOS.
 
-Shuru boots lightweight Linux VMs using Apple's Virtualization.framework. Each sandbox is ephemeral: the rootfs resets on every run, giving agents a disposable environment to execute code, install packages, and run tools without touching your host.
+Shuru boots lightweight Linux VMs using Apple's Virtualization.framework. Each sandbox is ephemeral: the rootfs resets on every run, giving agents a disposable environment to execute code, install packages, and run tools without touching your host. 
 
 ## Requirements
 
@@ -37,6 +37,21 @@ shuru run --allow-net --allow-host api.openai.com --allow-host registry.npmjs.or
 
 # Custom resources
 shuru run --cpus 4 --memory 4096 --disk-size 8192 -- make -j4
+```
+
+## Packages
+
+ShuruOS is built on top of Debian Trixie 13. Packages can be installed with Debian's `apt-get` package manager:
+
+Via interactive shell (eg installs python):
+```sh
+apt-get update
+apt-get install -y python3
+```
+
+Command line: (eg creates a checkpoint base and installs python and gcc):
+```sh
+shuru checkpoint create myenv --allow-net -- sh -c 'apt-get update; apt-get install -y python3 gcc'
 ```
 
 ### Directory mounts
